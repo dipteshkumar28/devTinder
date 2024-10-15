@@ -6,18 +6,19 @@ const app = express();
 //   res.send("Hello world again!!");
 // });
 
-app.use("/diptesh", (req, res) => {
-  res.send("Diptesh Kumar ");
-});
+// app.use("/diptesh", (req, res) => {
+//   res.send("Diptesh Kumar ");
+// });
 
 //this will only handle get api(s)
-app.get("/user",(req,res)=>{
+app.get("/user/:userId/:name",(req,res)=>{
+   console.log(req.params); 
    res.send({firstname:"Diptesh",lastname:"kumar"});
 });
 
-app.post("/user",(req,res)=>{
-   res.send({College:"IIT Roorkee", Branch:"Metallurgical And Materials Engineering"});
-});
+// app.post("/user",(req,res)=>{
+//    res.send({College:"IIT Roorkee", Branch:"Metallurgical And Materials Engineering"});
+// });
 // app.use("/diptesh/kumar", (req, res) => {
 //   res.send("Diptesh songara");
 // });
