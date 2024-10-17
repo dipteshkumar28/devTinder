@@ -1,31 +1,71 @@
 const express = require("express");
+const connectdb = require("./config/database");
 
 const app = express();
 const { adminauth, userauth } = require("./middlewares/auth");
+const User = require("./models/user");
+
+app.post("/signup",async(req,res)=>{
+  const user= new User({
+    Firstname:"Diptesh",
+    Lastname:"Kumar",
+    EmailId:"dipteshsongara2004@gmail.com",
+    Password:"1234343",
+    Age:21,
+    Gender:"Male"
+  });
+
+  try{
+
+    
+    await user.save();
+    res.send("Database send successfully");
+  }catch(err){
+    res.status(404).send(err.message); 
+  }
+
+
+
+})
+
+
+
+connectdb()
+  .then(() => {
+    console.log("Database connection established!!");
+    app.listen(7777,()=>{
+     console.log("Server Started!!!");
+    });
+  })
+  .catch((err) => {
+    console.error("Database cannot be connected!!!");
+  });
+
 //Handle auth middleware for all request GET,POST ,PATCH,DELETE.
 // app.use("/admin", adminauth);
 
-app.get("/getuserdata",(req,res,next)=>{
-   try{
-     throw new error("jijdjijd");
-     res.send("User Data sent!!");
+// app.use("/", (err, req, res, next) => {
+//   if (err) {
+//     res.status(500).send("Something went Wrong!!!");
+//   }
+// });
+// app.get("/getuserdata", (req, res, next) => {
+//    try {
+//     throw new error("jijdjijd");
+//     res.send("User Data sent!!");
+//   } catch (err) {
+//     res.status(500).send("Something went Wrong");
+//   }
+// });
 
-   }catch(err){
-    res.status(500).send("Something went Wrong");
-   }
-
-  
-})
-
-app.use("/",(err,req,res,next)=>{
-  if(err){
-    res.status(500).send("Something went Wrong!!!");
-  }
-})
+// app.use("/", (err, req, res, next) => {
+//   if (err) {
+//     res.status(500).send("Something went Wrong!!!");
+//   }
+// });
 // app.use("/user",userauth,(req,res,next)=>{
 //   res.send("User Data sent!!");
 // })
-
 
 // app.get("/admin/getAllData", (req, res) => {
 //   res.send("All data sent!!!");
@@ -95,4 +135,4 @@ app.use("/",(err,req,res,next)=>{
 // app.use("/", (req, res) => {
 //   res.send("Hello world again!!");
 // });
-app.listen(7777);
+// app.listen(7777);
