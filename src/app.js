@@ -3,19 +3,37 @@ const express = require("express");
 const app = express();
 const { adminauth, userauth } = require("./middlewares/auth");
 //Handle auth middleware for all request GET,POST ,PATCH,DELETE.
-app.use("/admin", adminauth);
+// app.use("/admin", adminauth);
 
-app.use("/user",userauth,(req,res,next)=>{
-  res.send("User Data sent!!");
+app.get("/getuserdata",(req,res,next)=>{
+   try{
+     throw new error("jijdjijd");
+     res.send("User Data sent!!");
+
+   }catch(err){
+    res.status(500).send("Something went Wrong");
+   }
+
+  
 })
 
-app.get("/admin/getAllData", (req, res) => {
-  res.send("All data sent!!!");
-});
+app.use("/",(err,req,res,next)=>{
+  if(err){
+    res.status(500).send("Something went Wrong!!!");
+  }
+})
+// app.use("/user",userauth,(req,res,next)=>{
+//   res.send("User Data sent!!");
+// })
 
-app.get("/admin/deleteUser", (req, res) => {
-  res.send("Deleted a user");
-});
+
+// app.get("/admin/getAllData", (req, res) => {
+//   res.send("All data sent!!!");
+// });
+
+// app.get("/admin/deleteUser", (req, res) => {
+//   res.send("Deleted a user");
+// });
 
 // app.use("/",(req,res)=>{
 //    res.send("Hadling/routers");
