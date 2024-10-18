@@ -5,36 +5,24 @@ const app = express();
 const { adminauth, userauth } = require("./middlewares/auth");
 const User = require("./models/user");
 
-app.post("/signup",async(req,res)=>{
-  const user= new User({
-    Firstname:"Diptesh",
-    Lastname:"Kumar",
-    EmailId:"dipteshsongara2004@gmail.com",
-    Password:"1234343",
-    Age:21,
-    Gender:"Male"
-  });
+app.use(express.json());
+app.post("/signup", async (req, res) => {
+  // console.log(req.body);
+  const user = new User(req.body);
 
-  try{
-
-    
+  try {
     await user.save();
     res.send("Database send successfully");
-  }catch(err){
-    res.status(404).send(err.message); 
+  } catch (err) {
+    res.status(404).send(err.message);
   }
-
-
-
-})
-
-
+});
 
 connectdb()
   .then(() => {
     console.log("Database connection established!!");
-    app.listen(7777,()=>{
-     console.log("Server Started!!!");
+    app.listen(7777, () => {
+      console.log("Server Started!!!");
     });
   })
   .catch((err) => {
